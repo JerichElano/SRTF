@@ -9,7 +9,7 @@ def ordinal_suffixes(j): # For ordinal suffixes
         else:
             ordinality.append(f"{i}{ordinal_suffixes[3]}")
 
-    return ordinality
+    return ordinality # just try 
 
 def srtf(jobs, arrival_time, burst_time):
     # Copy the burst time into remaining_time list
