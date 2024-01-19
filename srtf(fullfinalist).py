@@ -7,16 +7,17 @@ def srtf_formula(jobs, arrival_time, burst_time):
 
     waiting_time = [0] * n
     turnaround_time = [0] * n
+    f_jobs = [0] * n
     gantt_chart = []
     indel = 1
     
-    while finished != n:
+    while sum(f_jobs) != n:
         min_remaining_time = float('inf')
         next_job = None
 
         #This for loop selects the next job that will be processed
         for i in range(n):
-            if arrival_time[i] <= current_time and remaining_time[i] <= min_remaining_time:
+            if arrival_time[i] <= current_time and remaining_time[i] <= min_remaining_time and f_jobs[i] == 0:
                 #If it encounters jobs with same RBT and AT, it will choose the first job that arrived
                 if arrival_time[i] == current_time and remaining_time[i] == min_remaining_time:
                     continue
@@ -28,29 +29,49 @@ def srtf_formula(jobs, arrival_time, burst_time):
             current_time += 1
             continue
 
-        if (remaining_time[next_job] + current_time) > sorted_AT[1]:
-            gantt_chart.append((jobs[next_job], sorted_AT[1] - current_time))
-            current_time = sorted_AT[1]
-            #update remaining time of [next job]
-            remaining_time[next_job] = remaining_time[next_job] - (sorted_AT[1] - current_time)
+        print(f'initialremaining {remaining_time[next_job]}\ntime {current_time}\nindel {indel}')
+            
+        if len(sorted_AT) > indel:
+            if remaining_time[next_job] == sorted_AT[indel] - current_time:
+                gantt_chart.append((jobs[next_job], remaining_time[next_job]))
+                #update remaining time of [next job]
+                f_jobs[next_job] = 1
+                current_time = sorted_AT[indel]
+                turnaround_time[next_job] = current_time - arrival_time[next_job]
+                waiting_time[next_job] = turnaround_time[next_job] - burst_time[next_job]
+                print(f'three+++++++++++++++++remaining {arrival_time[next_job]} {remaining_time[next_job]}\ntime {current_time}\nindel {indel}')
+                print(turnaround_time, waiting_time, 00000000)
+            else:
+                gantt_chart.append((jobs[next_job], sorted_AT[indel] - current_time))
+                #update remaining time of [next job]
+                remaining_time[next_job] = remaining_time[next_job] - (sorted_AT[indel] - current_time)
+                current_time = sorted_AT[indel]
+                print(f'two=============remaining {remaining_time[next_job]}\ntime {current_time}\nindel {indel}')
             indel += 1
-            print(f"this is indel: {indel}")
-            continue
         else:
+            print('fuck')
             gantt_chart.append((jobs[next_job], remaining_time[next_job]))
             current_time = current_time + remaining_time[next_job]
             turnaround_time[next_job] = current_time - arrival_time[next_job]
             waiting_time[next_job] = turnaround_time[next_job] - burst_time[next_job]
-            remaining_time[next_job] = float('inf')
-            finished += 1
-
-        current_time += 1
+            f_jobs[next_job] = 1
+            print(f'one------------remaining {remaining_time[next_job]}\ntime {current_time}\nindel {indel}')
+            print(turnaround_time, waiting_time, 0000)
+        print(gantt_chart)
+        
     return arrival_time, burst_time, waiting_time, turnaround_time, gantt_chart
 
 def main():
+    '''
     jobs = ["A", "B", "C"]
     arrival_time = [0, 4, 7]
     burst_time = [7, 4, 1]
+
+    '''    
+    jobs = ["A", "B", "C", "D", "E"]
+    arrival_time = [3, 5, 8, 0 , 12]
+    burst_time = [4, 9, 4, 7, 6]
+    
 
     print("======================================================")
     print("Welcome to the Shortest Remaining Time First Simulator")
