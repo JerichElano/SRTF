@@ -50,23 +50,23 @@ def srtf_formula(jobs, AT, BT):
     return AT, BT, ET, TAT, WT, gantt_chart, time_sequence
 
 def main():    
-    # AT, BT = [], []
+    AT, BT = [], []
 
-    # print("\n-----------------------------------------------------")
-    # print("CPU SCHEDULING | Shortest Remaining Time First (SRTF)")
-    # print("-----------------------------------------------------\n")
+    print("\n-----------------------------------------------------")
+    print("CPU SCHEDULING | Shortest Remaining Time First (SRTF)")
+    print("-----------------------------------------------------\n")
 
-    # n = int(input(f"Enter number of process: "))
-    # jobs = [chr(ord('A') + i) for i in range(n)]
+    n = int(input(f"Enter number of process: "))
+    jobs = [chr(ord('A') + i) for i in range(n)]
 
-    # for i in range(n):
-    #     AT.append(int(input(f"\nArrival Time (AT) of JOB {jobs[i]}: ")))
-    #     BT.append(int(input(f"Burst Time (BT) of JOB {jobs[i]}: ")))
+    for i in range(n):
+        AT.append(int(input(f"\nArrival Time (AT) of JOB {jobs[i]}: ")))
+        BT.append(int(input(f"Burst Time (BT) of JOB {jobs[i]}: ")))
 
-    jobs = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
-    AT = [0, 0, 12, 22, 7, 27, 17, 3, 32]
-    BT = [8, 6, 7, 6, 4, 3, 7, 6, 4]
-    PR = [5, 5, 3, 1, 1, 3, 2, 4, 1]
+    # jobs = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
+    # AT = [0, 0, 12, 22, 7, 27, 17, 3, 32]
+    # BT = [8, 6, 7, 6, 4, 3, 7, 6, 4]
+    # PR = [5, 5, 3, 1, 1, 3, 2, 4, 1]
 
     AT, BT, ET, TAT, WT, gantt_chart, time_sequence = srtf_formula(jobs, AT, BT)
 
